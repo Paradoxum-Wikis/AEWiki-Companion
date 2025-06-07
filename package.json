@@ -1,0 +1,21 @@
+{
+  "name": "aewiki-companion",
+  "version": "1.0.0",
+  "description": "ALTER EGO Wiki Companion - A site for wiki statistics and insights",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "prettier . --write"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1"
+  }
+}
