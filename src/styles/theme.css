@@ -1,0 +1,125 @@
+.light {
+  --community-bg: #f4f4f4;
+  --nav-bg: #900c3f;
+  --header-color: #000000;
+  --accent-color: #900c3f;
+  --link-color: #900c3f;
+  --article-bg: #f4f4f4;
+
+  --bs-primary: #900c3f;
+  
+  --text-primary: #000000;
+  --text-secondary: #6c757d;
+  --border-color: var(--accent-color);
+  --card-bg: rgba(255, 255, 255, 0.5);
+  --box-shadow: 0 0 15px rgba(255, 51, 128, 0.5);
+}
+
+.light body {
+  background-color: var(--community-bg);
+  color: var(--text-primary);
+}
+
+.light .bg-wiki {
+  background-color: var(--nav-bg) !important;
+}
+
+.light .card {
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--border-color);
+}
+
+.light .card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.light .card-header {
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.light .btn-wiki {
+  background-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+}
+
+.light .btn-wiki:hover {
+  background-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
+  border-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
+}
+
+.light .btn-outline-secondary {
+  color: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
+
+.light .btn-outline-secondary:hover {
+  background-color: var(--text-secondary);
+  border-color: var(--text-secondary);
+  color: #fff;
+}
+
+.light .display-4 {
+  color: var(--header-color);
+}
+
+.light .lead {
+  color: var(--text-secondary);
+}
+
+.light h1, 
+.light h2, 
+.light h3, 
+.light h4, 
+.light h5, 
+.light h6 {
+  color: var(--header-color);
+}
+
+.light a {
+  color: var(--link-color);
+}
+
+.light a:hover {
+  color: color-mix(in srgb, var(--link-color) 85%, black);
+}
+
+.light .list-group-item {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+.light .alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  color: #721c24;
+}
+
+.light .spinner-border {
+  color: var(--accent-color);
+}
+
+.light .text-muted {
+  color: var(--text-secondary) !important;
+}
+
+.light .contributions-count {
+  color: var(--accent-color);
+}
+
+.light .leaderboard-item:hover {
+  background-color: rgba(144, 12, 63, 0.05);
+}
+
+.light .admin-badge {
+  background-color: rgba(144, 12, 63, 0.3);
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 700;
+}

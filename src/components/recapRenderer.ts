@@ -25,22 +25,26 @@ export class RecapRenderer {
     this.leaderboardElement.innerHTML = "";
   }
 
-  showError(message: string): void {
+  showError(message: string, dateString?: string): void {
     this.loadingElement.style.display = "none";
     this.errorElement.style.display = "block";
     this.errorMessageElement.textContent = message;
     this.leaderboardElement.innerHTML = "";
+    
+    if (dateString) {
+      this.currentDateElement.textContent = RecapService.formatDisplayDate(dateString);
+    }
+
+    this.totalContributorsElement.textContent = "-";
   }
 
   renderLeaderboard(data: RecapData, dateString: string): void {
     this.loadingElement.style.display = "none";
     this.errorElement.style.display = "none";
 
-    // Update summary info
-    this.totalContributorsElement.textContent =
-      data.totalContributors.toString();
-    this.currentDateElement.textContent =
-      RecapService.formatDisplayDate(dateString);
+    // summary
+    this.totalContributorsElement.textContent = data.totalContributors.toString();
+    this.currentDateElement.textContent = RecapService.formatDisplayDate(dateString);
     this.leaderboardElement.innerHTML = "";
 
     if (data.contributors.length === 0) {
@@ -48,7 +52,7 @@ export class RecapRenderer {
       return;
     }
 
-    // Render contributors
+    // contribs
     data.contributors.forEach((contributor, index) => {
       const item = this.createLeaderboardItem(contributor, index + 1);
       this.leaderboardElement.appendChild(item);
@@ -77,36 +81,37 @@ export class RecapRenderer {
     const rankClass = rank <= 3 ? `rank-${rank}` : "";
     const avatarUrl = RecapService.extractAvatarUrl(contributor.avatar);
     const adminBadge = contributor.isAdmin
-      ? '<span class="admin-badge ms-2">Admin</span>'
+      ? '<span class="admin-badge ms-2">Administrator</span>'
       : "";
+    const userUrl = `https://alter-ego.fandom.com/wiki/User:${encodeURIComponent(contributor.userName)}`;
 
     item.innerHTML = `
-            <div class="leaderboard-rank ${rankClass} me-3">
-                ${rank <= 3 ? this.getRankIcon(rank) : rank}
-            </div>
-            <img src="${avatarUrl}" alt="${contributor.userName}" class="contributor-avatar me-3" 
-                 onerror="this.src='/api/placeholder/48/48'">
-            <div class="contributor-info flex-grow-1">
-                <h6 class="mb-1">
-                    ${contributor.userName}
-                    ${adminBadge}
-                </h6>
-                <small class="text-muted">
-                    <i class="bi bi-person me-1"></i>
-                    User ID: ${contributor.userId}
-                </small>
-            </div>
-            <div class="text-end">
-                <div class="contributions-count">
-                    ${contributor.contributions}
-                </div>
-                <small class="text-muted">${contributor.contributionsText}</small>
-            </div>
-        `;
+          <div class="leaderboard-rank ${rankClass} me-3">
+              ${rank <= 3 ? this.getRankIcon(rank) : rank}
+          </div>
+          <img src="${avatarUrl}" alt="${contributor.userName}" class="contributor-avatar me-3" 
+               onerror="this.src='https://static.wikia.nocookie.net/alter-ego/images/f/f7/Place.png'">
+          <div class="contributor-info flex-grow-1 me-3">
+              <h6 class="mb-1">
+                  ${contributor.userName}
+                  ${adminBadge}
+              </h6>
+              <small class="text-muted">
+                  <i class="bi bi-person me-1"></i>
+                  User ID: ${contributor.userId}
+              </small>
+          </div>
+          <div class="text-end">
+              <div class="contributions-count">
+                  ${contributor.contributions}
+              </div>
+              <small class="text-muted contributions-text">${contributor.contributionsText}</small>
+          </div>
+      `;
 
     item.style.cursor = "pointer";
     item.addEventListener("click", () => {
-      alert(`Would navigate to: ${contributor.profileUrl}`);
+      window.open(userUrl, '_blank', 'noopener,noreferrer');
     });
 
     return item;

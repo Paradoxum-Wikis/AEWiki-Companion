@@ -4,16 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ALTER EGO Wiki Companion</title>
+    <link rel="icon" href="https://static.wikia.nocookie.net/alter-ego/images/4/4a/Site-favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-wiki">
       <div class="container">
         <a class="navbar-brand" href="/">
-          <i class="bi bi-book me-2"></i>
-          ALTER EGO Wiki Companion
+          <img src="https://static.wikia.nocookie.net/alter-ego/images/4/4a/Site-favicon.ico" alt="ALTER EGO Wiki" width="24" height="24" class="me-1 d-none d-md-inline align-text-bottom">
+          <span class="d-none d-md-inline">ALTER EGO Wiki Companion</span>
+          <span class="d-md-none">AEWiki Companion</span>
         </a>
+        <button id="themeToggle" class="theme-switcher me-auto">
+          <i class="bi bi-moon-fill" id="themeIcon"></i>
+        </button>
         <div class="navbar-nav">
-          <a class="nav-link" href="/recap/">Recap</a>
+          <a class="nav-link text-white" href="/recap/">Recap</a>
         </div>
       </div>
     </nav>
@@ -21,10 +30,10 @@
     <main class="container mt-4">
       <div class="row">
         <div class="col-lg-8 mx-auto text-center">
-          <h1 class="display-4 mb-4">Welcome to ALTER EGO Wiki Companion</h1>
+          <h1 class="display-4 mb-4">Welcome, Alter Egoist!</h1>
           <p class="lead mb-4">random bullshit go brrrr</p>
           <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a href="/recap/" class="btn btn-dark btn-lg me-md-2">
+            <a href="/recap/" class="btn btn-wiki btn-lg me-md-2">
               <i class="bi bi-trophy me-2"></i>
               View Weekly Recap
             </a>

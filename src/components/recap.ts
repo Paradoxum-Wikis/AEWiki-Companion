@@ -1,11 +1,13 @@
-import "../styles/main.css";
-import "../styles/recap.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "../styles/main.css";
+import "../styles/theme.css";
+import "../styles/recap.css";
 
 import { RecapRenderer } from "./recapRenderer.js";
 import { RecapService } from "./recapService.js";
+import { ThemeManager } from "./themeManager.js";
 
 class RecapApp {
   private renderer: RecapRenderer;
@@ -76,7 +78,7 @@ class RecapApp {
         }
       }
 
-      this.renderer.showError(errorMessage);
+      this.renderer.showError(errorMessage, this.currentDate);
     }
   }
 
@@ -91,5 +93,6 @@ class RecapApp {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  ThemeManager.init();
   new RecapApp();
 });
