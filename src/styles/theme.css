@@ -7,7 +7,7 @@
   --article-bg: #f4f4f4;
 
   --bs-primary: #900c3f;
-  
+
   --text-primary: #000000;
   --text-secondary: #6c757d;
   --border-color: var(--accent-color);
@@ -47,7 +47,11 @@
 }
 
 .light .btn-wiki:hover {
-  background-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--accent-color) 85%,
+    black
+  ) !important;
   border-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
 }
 
@@ -59,11 +63,11 @@
   color: var(--text-secondary);
 }
 
-.light h1, 
-.light h2, 
-.light h3, 
-.light h4, 
-.light h5, 
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
 .light h6 {
   color: var(--header-color);
 }

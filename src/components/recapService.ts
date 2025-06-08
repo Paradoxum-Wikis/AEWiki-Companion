@@ -4,6 +4,10 @@ export class RecapService {
   private static readonly GITHUB_RAW_BASE =
     "https://raw.githubusercontent.com/Paradoxum-Wikis/AEWiki-Recap/main/data";
   private static readonly CACHE_KEY_PREFIX = "aewiki-recap-";
+  private static readonly INDEX_CACHE_KEY = "aewiki-available-files";
+  private static readonly INDEX_CACHE_DURATION = 6 * 24 * 60 * 60 * 1000; // 6 days
+
+  private static availableFiles: Set<string> | null = null;
 
   static formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -49,7 +53,7 @@ export class RecapService {
     try {
       const cacheKey = this.getCacheKey(dateString);
       const cached = localStorage.getItem(cacheKey);
-      
+
       if (!cached) {
         return null;
       }
@@ -84,25 +88,103 @@ export class RecapService {
           cacheEntries.push({ key, date: dateString });
         }
       }
-      
+
       // Sort by date (oldest first) and remove the oldest 25%
       cacheEntries.sort((a, b) => a.date.localeCompare(b.date));
       const entriesToRemove = Math.ceil(cacheEntries.length * 0.25);
-      
+
       for (let i = 0; i < entriesToRemove && i < cacheEntries.length; i++) {
         localStorage.removeItem(cacheEntries[i].key);
       }
-      
-      console.log(`Cleared ${entriesToRemove} oldest cache entries to free up space`);
+
+      console.log(
+        `Cleared ${entriesToRemove} oldest cache entries to free up space`,
+      );
     } catch (error) {
       console.warn("Error clearing old cache:", error);
     }
+  }
+
+  private static async fetchAvailableFiles(): Promise<Set<string>> {
+    try {
+      const cached = localStorage.getItem(this.INDEX_CACHE_KEY);
+      if (cached) {
+        const { timestamp, files } = JSON.parse(cached);
+        const now = Date.now();
+
+        if (now - timestamp < this.INDEX_CACHE_DURATION) {
+          console.log("Using cached available files index");
+          return new Set(files);
+        }
+      }
+
+      console.log("Fetching available files from GitHub API");
+      const response = await fetch(
+        "https://api.github.com/repos/Paradoxum-Wikis/AEWiki-Recap/git/trees/main?recursive=1",
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch directory: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const availableFiles = new Set<string>();
+
+      data.tree
+        .filter(
+          (item: any) =>
+            item.type === "blob" &&
+            item.path.startsWith("data/") &&
+            item.path.endsWith(".json") &&
+            item.path.includes("recap-"),
+        )
+        .forEach((item: any) => {
+          // get date from filename: data/2025/recap-2025-01-01.json -> 2025-01-01
+          const match = item.path.match(/recap-(\d{4}-\d{2}-\d{2})\.json$/);
+          if (match) {
+            availableFiles.add(match[1]);
+          }
+        });
+
+      const cacheData = {
+        timestamp: Date.now(),
+        files: Array.from(availableFiles),
+      };
+
+      try {
+        localStorage.setItem(this.INDEX_CACHE_KEY, JSON.stringify(cacheData));
+        console.log(`Cached ${availableFiles.size} available files`);
+      } catch (error) {
+        console.warn("Failed to cache available files:", error);
+      }
+
+      return availableFiles;
+    } catch (error) {
+      console.error("Error fetching available files:", error);
+      return new Set<string>();
+    }
+  }
+
+  private static async ensureAvailableFiles(): Promise<void> {
+    if (!this.availableFiles) {
+      this.availableFiles = await this.fetchAvailableFiles();
+    }
+  }
+
+  private static async isFileAvailable(dateString: string): Promise<boolean> {
+    await this.ensureAvailableFiles();
+    return this.availableFiles!.has(dateString);
   }
 
   static async fetchRecapData(dateString: string): Promise<RecapData> {
     const cachedData = this.getCachedData(dateString);
     if (cachedData) {
       return cachedData;
+    }
+
+    const fileExists = await this.isFileAvailable(dateString);
+    if (!fileExists) {
+      throw new Error("No recap data available for this date.");
     }
 
     const { year } = this.parseDate(dateString);
@@ -120,7 +202,7 @@ export class RecapService {
 
       const data: RecapData = await response.json();
       this.setCachedData(dateString, data);
-      
+
       return data;
     } catch (error) {
       console.error("Error fetching recap data:", error);
@@ -154,57 +236,5 @@ export class RecapService {
     const url = new URL(window.location.href);
     url.searchParams.set("date", dateString);
     window.history.pushState({}, "", url.toString());
-  }
-
-  // maintenance
-  static clearAllCache(): void {
-    try {
-      const keysToRemove: string[] = [];
-      
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith(this.CACHE_KEY_PREFIX)) {
-          keysToRemove.push(key);
-        }
-      }
-      
-      keysToRemove.forEach(key => localStorage.removeItem(key));
-      console.log(`Cleared ${keysToRemove.length} cache entries`);
-    } catch (error) {
-      console.warn("Error clearing cache:", error);
-    }
-  }
-
-  static getCacheStats(): { totalEntries: number; totalSize: number; oldestEntry: string | null; newestEntry: string | null } {
-    let totalEntries = 0;
-    let totalSize = 0;
-    let oldestEntry: string | null = null;
-    let newestEntry: string | null = null;
-
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.startsWith(this.CACHE_KEY_PREFIX)) {
-        const value = localStorage.getItem(key);
-        if (value) {
-          totalEntries++;
-          totalSize += value.length;
-          
-          const dateString = key.replace(this.CACHE_KEY_PREFIX, "");
-          if (!oldestEntry || dateString < oldestEntry) {
-            oldestEntry = dateString;
-          }
-          if (!newestEntry || dateString > newestEntry) {
-            newestEntry = dateString;
-          }
-        }
-      }
-    }
-
-    return {
-      totalEntries,
-      totalSize,
-      oldestEntry,
-      newestEntry
-    };
   }
 }

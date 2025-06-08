@@ -30,9 +30,10 @@ export class RecapRenderer {
     this.errorElement.style.display = "block";
     this.errorMessageElement.textContent = message;
     this.leaderboardElement.innerHTML = "";
-    
+
     if (dateString) {
-      this.currentDateElement.textContent = RecapService.formatDisplayDate(dateString);
+      this.currentDateElement.textContent =
+        RecapService.formatDisplayDate(dateString);
     }
 
     this.totalContributorsElement.textContent = "-";
@@ -43,8 +44,10 @@ export class RecapRenderer {
     this.errorElement.style.display = "none";
 
     // summary
-    this.totalContributorsElement.textContent = data.totalContributors.toString();
-    this.currentDateElement.textContent = RecapService.formatDisplayDate(dateString);
+    this.totalContributorsElement.textContent =
+      data.totalContributors.toString();
+    this.currentDateElement.textContent =
+      RecapService.formatDisplayDate(dateString);
     this.leaderboardElement.innerHTML = "";
 
     if (data.contributors.length === 0) {
@@ -111,7 +114,7 @@ export class RecapRenderer {
 
     item.style.cursor = "pointer";
     item.addEventListener("click", () => {
-      window.open(userUrl, '_blank', 'noopener,noreferrer');
+      window.open(userUrl, "_blank", "noopener,noreferrer");
     });
 
     return item;
