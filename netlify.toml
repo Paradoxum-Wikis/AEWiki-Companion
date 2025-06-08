@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "https://roboticsnotes.netlify.app/*"
+  to = "https://ae.tds-editor.com/:splat"
+  status = 301
+  force = true
