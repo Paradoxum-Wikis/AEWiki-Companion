@@ -43,6 +43,14 @@ class RecapApp {
       this.currentDate = RecapService.getCurrentWeekDate();
       this.loadRecapData();
     });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" && !this.prevWeekButton.disabled) {
+        this.navigateWeek(-7);
+      } else if (e.key === "ArrowRight" && !this.nextWeekButton.disabled) {
+        this.navigateWeek(7);
+      }
+    });
   }
 
   private navigateWeek(days: number): void {
