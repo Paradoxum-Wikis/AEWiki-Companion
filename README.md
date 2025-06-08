@@ -1,3 +1,4 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6eac6c6c-4214-449b-b5ec-c702823c02f6/deploy-status)](https://app.netlify.com/projects/roboticsnotes/deploys)
 # AEWiki Companion
 The companion site for the ALTER EGO Wiki.
 
@@ -19,7 +20,7 @@ The companion site for the ALTER EGO Wiki.
    ```
 
 ## Production
-This repository was deployed on netlify, you may want to do the same.
+This repository was deployed on Netlify, you may want to do the same.
 
 **Build settings:**
    - Build command: `npm run build`
