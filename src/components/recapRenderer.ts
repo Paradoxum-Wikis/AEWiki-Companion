@@ -63,6 +63,8 @@ export class RecapRenderer {
   }
 
   private showNoData(): void {
+    this.errorElement.style.display = "none";
+    
     const noDataElement = document.createElement("div");
     noDataElement.className = "text-center p-4";
     noDataElement.innerHTML = `
