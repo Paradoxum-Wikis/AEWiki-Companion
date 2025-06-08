@@ -51,17 +51,6 @@
   border-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
 }
 
-.light .btn-outline-secondary {
-  color: var(--text-secondary);
-  border-color: var(--text-secondary);
-}
-
-.light .btn-outline-secondary:hover {
-  background-color: var(--text-secondary);
-  border-color: var(--text-secondary);
-  color: #fff;
-}
-
 .light .display-4 {
   color: var(--header-color);
 }
