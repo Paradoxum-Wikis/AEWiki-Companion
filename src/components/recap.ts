@@ -17,7 +17,7 @@ class RecapApp {
 
   constructor() {
     this.renderer = new RecapRenderer();
-    this.currentDate = RecapService.getCurrentWeekDate();
+    this.currentDate = "";
 
     this.prevWeekButton = document.getElementById(
       "prevWeek",
@@ -27,6 +27,11 @@ class RecapApp {
     ) as HTMLButtonElement;
 
     this.initializeEventListeners();
+    this.init();
+  }
+
+  private async init(): Promise<void> {
+    this.currentDate = await RecapService.getCurrentWeekDate();
     this.loadRecapData();
   }
 
@@ -39,8 +44,8 @@ class RecapApp {
       this.navigateWeek(7);
     });
 
-    window.addEventListener("popstate", () => {
-      this.currentDate = RecapService.getCurrentWeekDate();
+    window.addEventListener("popstate", async () => {
+      this.currentDate = await RecapService.getCurrentWeekDate();
       this.loadRecapData();
     });
 

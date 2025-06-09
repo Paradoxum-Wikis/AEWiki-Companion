@@ -218,7 +218,7 @@ export class RecapService {
     return "https://static.wikia.nocookie.net/alter-ego/images/f/f7/Place.png";
   }
 
-  static getCurrentWeekDate(): string {
+  static async getCurrentWeekDate(): Promise<string> {
     const urlParams = new URLSearchParams(window.location.search);
     const dateParam = urlParams.get("date");
 
@@ -227,6 +227,12 @@ export class RecapService {
       if (dateRegex.test(dateParam)) {
         return dateParam;
       }
+    }
+
+    await this.ensureAvailableFiles();
+    if (this.availableFiles && this.availableFiles.size > 0) {
+      const sortedDates = Array.from(this.availableFiles).sort().reverse();
+      return sortedDates[0];
     }
 
     return this.formatDate(new Date());
