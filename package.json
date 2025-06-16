@@ -9,7 +9,7 @@
     "lint": "prettier . --write"
   },
   "devDependencies": {
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.0.3",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"
