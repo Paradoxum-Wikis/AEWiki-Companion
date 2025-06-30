@@ -213,7 +213,10 @@ export class RecapService {
   static extractAvatarUrl(avatarHtml: string): string {
     const imgMatch = avatarHtml.match(/src="([^"]+)"/);
     if (imgMatch && imgMatch[1]) {
-      return imgMatch[1];
+      let avatarUrl = imgMatch[1];
+      avatarUrl = avatarUrl.replace(/width\/36\/height\/36/, "width/128/height/128");
+
+      return avatarUrl;
     }
     return "https://static.wikia.nocookie.net/alter-ego/images/f/f7/Place.png";
   }
