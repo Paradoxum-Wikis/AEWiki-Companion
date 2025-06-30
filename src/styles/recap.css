@@ -1,9 +1,7 @@
 .leaderboard-item {
-  border: none;
+  border: dashed 1px var(--border-color);
   padding: 1rem;
   transition: background-color 0.2s ease-in-out;
-  word-break: break-word;
-  overflow-wrap: break-word;
   border-radius: 0 !important;
 }
 
@@ -29,7 +27,6 @@
 .leaderboard-rank {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--accent-color);
   min-width: 2.5rem;
   text-align: center;
   flex-shrink: 0;
@@ -57,27 +54,29 @@
 }
 
 .contributor-info {
-  min-width: 0;
   flex-grow: 1;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.contributor-info::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .contributor-info h6 {
   margin-bottom: 0.25rem;
   font-weight: 600;
   color: var(--text-primary);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   line-height: 1.4;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  white-space: nowrap;
 }
 
 .contributor-info small {
   color: var(--text-secondary);
   font-size: 0.75rem;
+  white-space: nowrap;
 }
 
 .contributions-count {
@@ -101,15 +100,17 @@
   border-radius: 3px;
   font-weight: 700;
   white-space: nowrap;
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 1.2;
+  margin-left: 0.5rem;
+}
+
+.text-end {
+  flex-shrink: 0;
+  min-width: 80px;
 }
 
 @media (max-width: 768px) {
   .leaderboard-item {
     padding: 0.75rem;
-    flex-wrap: wrap;
   }
 
   .leaderboard-rank {
@@ -136,16 +137,7 @@
   }
 
   .admin-badge {
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     padding: 0.2rem 0.4rem;
   }
-}
-
-.d-flex.align-items-center {
-  min-width: 0;
-}
-
-.text-end {
-  flex-shrink: 0;
-  text-align: right !important;
 }
