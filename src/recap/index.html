@@ -2,17 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
       name="description"
       content="Weekly contributor leaderboard for the ALTER EGO Wiki. Track top contributors and their weekly contributions."
     />
 
-    <meta property="og:title" content="Weekly Recap | ALTER EGO Wiki Companion" />
+    <meta
+      property="og:title"
+      content="Weekly Recap | ALTER EGO Wiki Companion"
+    />
     <meta
       property="og:description"
       content="Weekly contributor leaderboard for the ALTER EGO Wiki. Track top contributors and their weekly contributions."
@@ -22,7 +22,10 @@
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="ALTER EGO Wiki Companion" />
-    <meta name="twitter:title" content="Weekly Recap | ALTER EGO Wiki Companion" />
+    <meta
+      name="twitter:title"
+      content="Weekly Recap | ALTER EGO Wiki Companion"
+    />
     <meta
       name="twitter:description"
       content="Weekly contributor leaderboard for the ALTER EGO Wiki. Track top contributors and their weekly contributions."
@@ -100,7 +103,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-6 mb-3 mb-md-0">
+            <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">
@@ -111,7 +114,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">
@@ -119,6 +122,28 @@
                     Total Contributors
                   </h5>
                   <p class="card-text" id="totalContributors">-</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="bi bi-clipboard-data me-2"></i>
+                    Total Contributions
+                  </h5>
+                  <p class="card-text" id="totalContributions">-</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="bi bi-person-lines-fill me-2"></i>
+                    Average per User
+                  </h5>
+                  <p class="card-text" id="averagePerUser">-</p>
                 </div>
               </div>
             </div>
@@ -153,6 +178,9 @@
               </div>
             </div>
           </div>
+
+          <div id="globalContributionsBar" class="mt-4 mb-3"></div>
+          <div id="contributionsLegend" class="mb-4"></div>
         </div>
       </div>
     </main>
