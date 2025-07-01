@@ -188,3 +188,27 @@ a:hover {
 .text-muted {
   color: var(--text-secondary) !important;
 }
+
+.text-gradient {
+  background: linear-gradient(135deg, #ff725e, #b5285e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.toru-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toru-card:hover {
+  transform: translateY(-5px);
+}
+
+.toru-icon {
+  transition: transform 0.3s ease;
+}
+
+.toru-card:hover .toru-icon {
+  transform: scale(1.1);
+}

@@ -1,0 +1,137 @@
+.discord-widget {
+  background: #5865F2;
+  border-radius: 3px;
+  padding: 20px;
+  color: white;
+  margin-top: 1rem;
+}
+
+.discord-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.discord-header > h4 {
+    color: white;
+}
+
+.discord-icon {
+  width: 32px;
+  height: 32px;
+  background: url('https://cdn.discordapp.com/icons/1362084781134708907/db0cf1ff09caad89e93a71428c31d260.png?size=256') no-repeat center center;
+  background-size: contain;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.discord-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.discord-stat {
+  text-align: center;
+}
+
+.discord-stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00ff7f;
+}
+
+.discord-stat-number.member {
+    color: white;
+}
+
+.discord-stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.discord-members {
+  margin: 15px 0;
+  max-height: 120px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.discord-member {
+  display: inline-flex;
+  align-items: center;
+  margin: 3px 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 3px 8px;
+  font-size: 0.85rem;
+}
+
+.discord-member-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.discord-member-status.online {
+  background: #57f287;
+}
+
+.discord-member-status.idle {
+  background: #fee75c;
+}
+
+.discord-member-status.dnd {
+  background: #ed4245;
+}
+
+.discord-join-btn {
+  background: white !important;
+  color: #5865f2 !important;
+  border: none !important;
+  border-radius: 3px;
+  padding: 12px 24px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.discord-join-btn:hover {
+  background: #f8f9fa !important;
+  color: #4752c4 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.discord-loading {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+  .discord-stats {
+    gap: 20px;
+  }
+
+  .discord-stat-number {
+    font-size: 1.25rem;
+  }
+
+  .discord-members {
+    max-height: 80px;
+  }
+}

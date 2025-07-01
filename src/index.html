@@ -62,32 +62,105 @@
       </div>
     </nav>
 
-    <main class="container mt-4">
-      <div class="row">
-        <img src="/wikilogo.png" alt="ALTER EGO Wiki Logo" class="w-75 mx-auto"/>
-        <div class="col-lg-8 mx-auto text-center">
-          <h1 class="display-4 mb-4">Welcome, Alter Egoist!</h1>
-          <p class="lead mb-4">random bullshit go brrrr</p>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a href="/recap/" class="btn btn-wiki btn-lg me-md-2">
-              <i class="bi bi-trophy me-2"></i>
-              Weekly Recap
-            </a>
-            <a
-              href="https://alter-ego.fandom.com/wiki/"
-              class="btn btn-wiki btn-lg me-md-2"
-            >
-              <i class="bi bi-book me-2"></i>
-              ALTER EGO Wiki
-            </a>
-            <a
-              href="https://x.com/isALTEREGOout"
-              target="_blank"
-              class="btn btn-wiki btn-lg me-md-2"
-            >
-              <i class="bi bi-twitter-x me-2"></i>
-              Fan Page
-            </a>
+    <main class="container my-5">
+      <!-- Hero -->
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-8">
+          <div class="text-center mb-5">
+            <div class="logo-container mb-4">
+              <img 
+                src="/wikilogo.png" 
+                alt="ALTER EGO Wiki Logo" 
+                class="img-fluid mx-auto d-block logo-image"
+                style="max-width: 250px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));"
+              />
+            </div>
+            
+            <!-- Welcome -->
+            <h1 class="display-3 fw-bold mb-3 text-gradient">
+              Welcome, Alter Egoist!
+            </h1>
+            <p class="lead mb-4 text-muted px-md-5">
+              Explore the ALTER EGO Wiki ecosystem with our various tools and resources on this companion site!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="row g-4 justify-content-center mb-3">
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 toru-card">
+            <div class="card-body text-center p-4">
+              <div class="toru-icon mb-3">
+                <i class="bi bi-trophy display-4 text-warning"></i>
+              </div>
+              <h5 class="card-title fw-bold mb-3">Weekly Recap</h5>
+              <p class="card-text text-muted mb-4">
+                Discover top contributors and weekly statistics from the ALTERPEDIA
+              </p>
+              <a href="/recap/" class="btn btn-wiki btn-lg w-100">
+                <i class="bi bi-trophy me-2"></i>
+                View Leaderboard
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 toru-card">
+            <div class="card-body text-center p-4">
+              <div class="toru-icon mb-3">
+                <i class="bi bi-book display-4 text-primary"></i>
+              </div>
+              <h5 class="card-title fw-bold mb-3">ALTER EGO Wiki</h5>
+              <p class="card-text text-muted mb-4">
+                Visit the ALTERPEDIA for ALTER EGO content and perhaps even contribute to the community!
+              </p>
+              <a 
+                href="https://alter-ego.fandom.com/wiki/" 
+                class="btn btn-wiki btn-lg w-100"
+                target="_blank"
+              >
+                <i class="bi bi-book me-2"></i>
+                Browse Wiki
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 toru-card">
+            <div class="card-body text-center p-4">
+              <div class="toru-icon mb-3">
+                <i class="bi bi-twitter-x display-4" style="color: #1DA1F2;"></i>
+              </div>
+              <h5 class="card-title fw-bold mb-3">Fan Page</h5>
+              <p class="card-text text-muted mb-4">
+                Stay updated with the latest ALTER EGO news and community discussions
+              </p>
+              <a 
+                href="https://x.com/isALTEREGOout" 
+                target="_blank" 
+                class="btn btn-wiki btn-lg w-100"
+              >
+                <i class="bi bi-twitter-x me-2"></i>
+                Follow Us!
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="discord-widget" id="discordWidget">
+            <div class="discord-loading text-center p-3">
+              <div class="spinner-border spinner-border-sm me-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <span class="text-muted">Loading Discord server...</span>
+            </div>
           </div>
         </div>
       </div>
