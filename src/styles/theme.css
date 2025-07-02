@@ -44,15 +44,12 @@
 .light .btn-wiki {
   background-color: var(--accent-color) !important;
   border-color: var(--accent-color) !important;
+  color: white !important;
 }
 
 .light .btn-wiki:hover {
-  background-color: color-mix(
-    in srgb,
-    var(--accent-color) 85%,
-    black
-  ) !important;
-  border-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
+  background-color: #EB1668 !important;
+  border-color: #EB1668 !important;
 }
 
 .light .display-4 {

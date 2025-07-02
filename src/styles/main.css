@@ -113,17 +113,12 @@ main {
 .btn-wiki {
   background-color: var(--accent-color) !important;
   border-color: var(--accent-color) !important;
-  color: #fff !important;
+  color: black !important;
 }
 
 .btn-wiki:hover {
-  background-color: color-mix(
-    in srgb,
-    var(--accent-color) 85%,
-    black
-  ) !important;
-  border-color: color-mix(in srgb, var(--accent-color) 85%, black) !important;
-  color: #fff !important;
+  background-color: #A4141F !important;
+  border-color: #A4141F !important;
 }
 
 .btn-outline-secondary {
