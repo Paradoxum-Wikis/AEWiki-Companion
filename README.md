@@ -2,7 +2,7 @@
 
 # AEWiki Companion
 
-The companion site for the ALTER EGO Wiki.
+The companion site for the ALTER EGO Wiki. Data for leaderboards is taken from [Recap](https://github.com/Paradoxum-Wikis/AEWiki-Recap).
 
 ## Local
 
