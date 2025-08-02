@@ -24,3 +24,31 @@ export interface DateInfo {
   day: number;
   dateString: string;
 }
+
+export interface BattleStats {
+  userId: string;
+  userTag: string;
+  wins: number;
+  losses: number;
+  totalBattles: number;
+  winRate: number;
+  lastCasualBattleAt?: string;
+  rankedWins: number;
+  rankedLosses: number;
+  rankedTotalBattles: number;
+  rankedWinRate: number;
+  lastRankedBattleAt?: string;
+}
+
+export interface BattleRecord {
+  battleId: string;
+  winnerId: string;
+  winnerTag: string;
+  loserId: string;
+  loserTag: string;
+  battleDate: string;
+  turns: number;
+  winnerHpRemaining: number;
+  winnerMaxHp: number;
+  isRanked: boolean;
+}

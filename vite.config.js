@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "src/index.html"),
         recap: resolve(__dirname, "src/recap/index.html"),
+        deathbattle: resolve(__dirname, "src/deathbattle/index.html"),
       },
     },
   },
