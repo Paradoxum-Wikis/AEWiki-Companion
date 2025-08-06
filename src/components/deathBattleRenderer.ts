@@ -96,6 +96,12 @@ export class DeathBattleRenderer {
     
     // Sort
     casualPlayers.sort((a, b) => {
+      const aHasMinMatches = a.totalBattles >= 3;
+      const bHasMinMatches = b.totalBattles >= 3;
+
+      if (aHasMinMatches && !bHasMinMatches) return -1;
+      if (!aHasMinMatches && bHasMinMatches) return 1;
+
       if (b.winRate !== a.winRate) return b.winRate - a.winRate;
       return b.totalBattles - a.totalBattles;
     });
@@ -131,6 +137,12 @@ export class DeathBattleRenderer {
     
     // Sort
     rankedPlayers.sort((a, b) => {
+      const aHasMinMatches = a.rankedTotalBattles >= 5;
+      const bHasMinMatches = b.rankedTotalBattles >= 5;
+
+      if (aHasMinMatches && !bHasMinMatches) return -1;
+      if (!aHasMinMatches && bHasMinMatches) return 1;
+
       if (b.rankedWinRate !== a.rankedWinRate) return b.rankedWinRate - a.rankedWinRate;
       return b.rankedTotalBattles - a.rankedTotalBattles;
     });
