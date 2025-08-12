@@ -23,6 +23,20 @@ export class DeathBattleRenderer {
   private recordsErrorMessageElement: HTMLElement;
   private battleRecordsElement: HTMLElement;
 
+  private recordsPaginationElement: HTMLElement;
+  private recordsPerPageElement: HTMLSelectElement;
+  private recordsInfoElement: HTMLElement;
+  private recordsFirstPageElement: HTMLButtonElement;
+  private recordsPrevPageElement: HTMLButtonElement;
+  private recordsNextPageElement: HTMLButtonElement;
+  private recordsLastPageElement: HTMLButtonElement;
+  private recordsPageNumbersElement: HTMLElement;
+
+  private currentPage: number = 1;
+  private recordsPerPage: number = 25;
+  private totalRecords: number = 0;
+  private filteredRecords: BattleRecord[] = [];
+
   constructor() {
     // Casual elements
     this.casualLoadingElement = document.getElementById("casualLoading")!;
@@ -47,6 +61,52 @@ export class DeathBattleRenderer {
     this.recordsErrorElement = document.getElementById("recordsError")!;
     this.recordsErrorMessageElement = document.getElementById("recordsErrorMessage")!;
     this.battleRecordsElement = document.getElementById("battleRecords")!;
+
+    // Pagination elements
+    this.recordsPaginationElement = document.getElementById("recordsPagination")!;
+    this.recordsPerPageElement = document.getElementById("recordsPerPage")! as HTMLSelectElement;
+    this.recordsInfoElement = document.getElementById("recordsInfo")!;
+    this.recordsFirstPageElement = document.getElementById("recordsFirstPage")! as HTMLButtonElement;
+    this.recordsPrevPageElement = document.getElementById("recordsPrevPage")! as HTMLButtonElement;
+    this.recordsNextPageElement = document.getElementById("recordsNextPage")! as HTMLButtonElement;
+    this.recordsLastPageElement = document.getElementById("recordsLastPage")! as HTMLButtonElement;
+    this.recordsPageNumbersElement = document.getElementById("recordsPageNumbers")!;
+
+    this.setupPaginationEvents();
+  }
+
+  private setupPaginationEvents(): void {
+    this.recordsPerPageElement.addEventListener('change', () => {
+      this.recordsPerPage = parseInt(this.recordsPerPageElement.value);
+      this.currentPage = 1;
+      this.renderCurrentPage();
+    });
+
+    this.recordsFirstPageElement.addEventListener('click', () => {
+      this.currentPage = 1;
+      this.renderCurrentPage();
+    });
+
+    this.recordsPrevPageElement.addEventListener('click', () => {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.renderCurrentPage();
+      }
+    });
+
+    this.recordsNextPageElement.addEventListener('click', () => {
+      const totalPages = Math.ceil(this.totalRecords / this.recordsPerPage);
+      if (this.currentPage < totalPages) {
+        this.currentPage++;
+        this.renderCurrentPage();
+      }
+    });
+
+    this.recordsLastPageElement.addEventListener('click', () => {
+      const totalPages = Math.ceil(this.totalRecords / this.recordsPerPage);
+      this.currentPage = totalPages;
+      this.renderCurrentPage();
+    });
   }
 
   showCasualLoading(): void {
@@ -168,23 +228,116 @@ export class DeathBattleRenderer {
     });
   }
 
-  renderBattleRecords(records: BattleRecord[]): void {
+  renderBattleRecords(records: BattleRecord[], venueFilter: string = 'all'): void {
     this.recordsLoadingElement.style.display = "none";
     this.recordsErrorElement.style.display = "none";
 
-    this.battleRecordsElement.innerHTML = "";
-
     if (records.length === 0) {
+      this.recordsPaginationElement.style.display = "none";
       this.showNoData(this.battleRecordsElement, "No battle records available.");
       return;
     }
 
-    const recentRecords = records.slice(0, 50);
-    
-    recentRecords.forEach(record => {
+    this.filteredRecords = records;
+    if (venueFilter !== 'all') {
+      this.filteredRecords = records.filter(record => {
+        if (venueFilter === 'alter-ego') {
+          return record.guildId === "1362084781134708907" || !record.guildId;
+        }
+        return record.guildId === venueFilter;
+      });
+    }
+
+    this.totalRecords = this.filteredRecords.length;
+    this.currentPage = 1;
+
+    if (this.totalRecords === 0) {
+      this.recordsPaginationElement.style.display = "none";
+      this.showNoData(this.battleRecordsElement, "No battle records found for the selected venue.");
+      return;
+    }
+
+    this.recordsPaginationElement.style.display = "flex";
+    this.renderCurrentPage();
+  }
+
+  private renderCurrentPage(): void {
+    this.battleRecordsElement.innerHTML = "";
+
+    const startIndex = (this.currentPage - 1) * this.recordsPerPage;
+    const endIndex = Math.min(startIndex + this.recordsPerPage, this.totalRecords);
+    const pageRecords = this.filteredRecords.slice(startIndex, endIndex);
+
+    pageRecords.forEach(record => {
       const item = this.createBattleRecordItem(record);
       this.battleRecordsElement.appendChild(item);
     });
+
+    this.updatePaginationControls();
+  }
+
+  private updatePaginationControls(): void {
+    const totalPages = Math.ceil(this.totalRecords / this.recordsPerPage);
+    const startItem = (this.currentPage - 1) * this.recordsPerPage + 1;
+    const endItem = Math.min(this.currentPage * this.recordsPerPage, this.totalRecords);
+
+    this.recordsInfoElement.textContent = `${startItem}-${endItem} of ${this.totalRecords} records`;
+    this.recordsFirstPageElement.disabled = this.currentPage === 1;
+    this.recordsPrevPageElement.disabled = this.currentPage === 1;
+    this.recordsNextPageElement.disabled = this.currentPage === totalPages;
+    this.recordsLastPageElement.disabled = this.currentPage === totalPages;
+
+    this.renderPageNumbers(totalPages);
+  }
+
+  private renderPageNumbers(totalPages: number): void {
+    this.recordsPageNumbersElement.innerHTML = "";
+
+    if (totalPages <= 1) return;
+
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    if (startPage > 1) {
+      this.addPageButton(1);
+      if (startPage > 2) {
+        this.addEllipsis();
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      this.addPageButton(i);
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        this.addEllipsis();
+      }
+      this.addPageButton(totalPages);
+    }
+  }
+
+  private addPageButton(pageNumber: number): void {
+    const button = document.createElement("button");
+    button.className = `btn btn-sm ${this.currentPage === pageNumber ? 'btn-primary' : 'btn-outline-secondary'}`;
+    button.textContent = pageNumber.toString();
+    button.addEventListener('click', () => {
+      this.currentPage = pageNumber;
+      this.renderCurrentPage();
+    });
+    this.recordsPageNumbersElement.appendChild(button);
+  }
+
+  private addEllipsis(): void {
+    const span = document.createElement("span");
+    span.className = "btn btn-sm btn-outline-secondary disabled";
+    span.textContent = "...";
+    this.recordsPageNumbersElement.appendChild(span);
   }
 
   private createPlayerItem(player: BattleStats, rank: number, type: 'casual' | 'ranked'): HTMLElement {
@@ -239,10 +392,22 @@ export class DeathBattleRenderer {
 
     const hpPercentage = (record.winnerHpRemaining / record.winnerMaxHp) * 100;
     const battleType = record.isRanked ? 'Ranked' : 'Normal';
+    
+    const getVenue = (guildId?: string): { name: string; color: string } => {
+      if (guildId === "735394249863987241") {
+        return { name: "Tower Defense Simulator Wiki", color: "bg-primary" };
+      } else if (guildId === "1362084781134708907" || !guildId) {
+        return { name: "ALTER EGO Wiki", color: "bg-secondary" };
+      } else {
+        return { name: "Unknown Venue", color: "bg-dark" };
+      }
+    };
+    
+    const venue = getVenue(record.guildId);
 
     item.innerHTML = `
       <div class="d-flex justify-content-between align-items-start mb-2">
-        <div>
+        <div class="flex-grow-1">
           <h6 class="mb-1">
             <span class="text-success fw-bold">${this.escapeHtml(record.winnerTag)}</span>
             <small class="text-muted mx-2">defeated</small>
@@ -252,8 +417,15 @@ export class DeathBattleRenderer {
             <i class="bi bi-calendar3 me-1"></i>
             ${DeathBattleService.formatDate(record.battleDate)}
           </small>
+          <br>
+          <small class="text-muted">
+            <i class="bi bi-building me-1"></i>
+            <span class="badge ${venue.color} me-1">${venue.name}</span>
+          </small>
         </div>
-        <span class="badge ${record.isRanked ? 'bg-warning text-dark' : 'bg-info'}">${battleType}</span>
+        <div class="text-end">
+          <span class="badge ${record.isRanked ? 'bg-warning text-dark' : 'bg-info'} mb-1">${battleType}</span>
+        </div>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex gap-3">

@@ -51,4 +51,5 @@ export interface BattleRecord {
   winnerHpRemaining: number;
   winnerMaxHp: number;
   isRanked: boolean;
+  guildId?: string;
 }
