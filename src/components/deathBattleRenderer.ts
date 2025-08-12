@@ -37,6 +37,10 @@ export class DeathBattleRenderer {
   private totalRecords: number = 0;
   private filteredRecords: BattleRecord[] = [];
 
+  private venueFilterButtons: NodeListOf<HTMLElement>;
+
+  private allRecords: BattleRecord[] = [];
+
   constructor() {
     // Casual elements
     this.casualLoadingElement = document.getElementById("casualLoading")!;
@@ -72,7 +76,10 @@ export class DeathBattleRenderer {
     this.recordsLastPageElement = document.getElementById("recordsLastPage")! as HTMLButtonElement;
     this.recordsPageNumbersElement = document.getElementById("recordsPageNumbers")!;
 
+    this.venueFilterButtons = document.querySelectorAll('.venue-filter');
+    
     this.setupPaginationEvents();
+    this.setupVenueFilterEvents();
   }
 
   private setupPaginationEvents(): void {
@@ -106,6 +113,21 @@ export class DeathBattleRenderer {
       const totalPages = Math.ceil(this.totalRecords / this.recordsPerPage);
       this.currentPage = totalPages;
       this.renderCurrentPage();
+    });
+  }
+
+  private setupVenueFilterEvents(): void {
+    this.venueFilterButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const venue = target.getAttribute('data-venue');
+        if (!venue) return;
+
+        this.venueFilterButtons.forEach(btn => btn.classList.remove('active'));
+        target.classList.add('active');
+        
+        this.renderBattleRecords(this.allRecords, venue);
+      });
     });
   }
 
@@ -232,15 +254,20 @@ export class DeathBattleRenderer {
     this.recordsLoadingElement.style.display = "none";
     this.recordsErrorElement.style.display = "none";
 
+    if (venueFilter === 'all' || this.allRecords.length === 0) {
+      this.allRecords = records;
+    }
+
     if (records.length === 0) {
       this.recordsPaginationElement.style.display = "none";
       this.showNoData(this.battleRecordsElement, "No battle records available.");
       return;
     }
 
-    this.filteredRecords = records;
+    // Filter
+    this.filteredRecords = this.allRecords;
     if (venueFilter !== 'all') {
-      this.filteredRecords = records.filter(record => {
+      this.filteredRecords = this.allRecords.filter(record => {
         if (venueFilter === 'alter-ego') {
           return record.guildId === "1362084781134708907" || !record.guildId;
         }
@@ -342,7 +369,7 @@ export class DeathBattleRenderer {
 
   private createPlayerItem(player: BattleStats, rank: number, type: 'casual' | 'ranked'): HTMLElement {
     const item = document.createElement("div");
-    item.className = "list-group-item leaderboard-item d-flex align-items-center"; // Use existing class
+    item.className = "list-group-item leaderboard-item d-flex align-items-center";
 
     const wins = type === 'casual' ? player.wins : player.rankedWins;
     const losses = type === 'casual' ? player.losses : player.rankedLosses;
@@ -397,9 +424,9 @@ export class DeathBattleRenderer {
       if (guildId === "735394249863987241") {
         return { name: "Tower Defense Simulator Wiki", color: "bg-primary" };
       } else if (guildId === "1362084781134708907" || !guildId) {
-        return { name: "ALTER EGO Wiki", color: "bg-secondary" };
+        return { name: "ALTER EGO Wiki", color: "bg-danger" };
       } else {
-        return { name: "Unknown Venue", color: "bg-dark" };
+        return { name: "Unknown Venue", color: "bg-secondary" };
       }
     };
     
