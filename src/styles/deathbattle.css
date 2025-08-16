@@ -60,6 +60,10 @@
   border-color: var(--accent-color);
 }
 
+#records {
+  background-color: var(--card-bg);
+}
+
 @media (max-width: 768px) {
   #recordsPagination {
     flex-direction: column;
