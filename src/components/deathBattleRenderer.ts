@@ -477,7 +477,7 @@ export class DeathBattleRenderer {
       ${lastBattle ? `<br><small class="text-muted">Last battle: ${DeathBattleService.formatRelativeTime(lastBattle)}</small>` : ""}
     </div>
     <div class="text-end">
-      <div class="d-flex gap-3 mb-1">
+      <div class="d-flex gap-3 mb-1 justify-content-end">
         <span class="text-success">
           <i class="bi bi-trophy-fill me-1"></i>
           ${wins}W
@@ -488,7 +488,7 @@ export class DeathBattleRenderer {
         </span>
       </div>
       <div class="fw-bold ${weightedScoreColor}">${weightedScore} WS</div>
-      <small class="text-muted">${totalBattles} battles (${winRate}% WR)</small>
+      <small class="text-muted">${totalBattles} ${totalBattles === 1 ? 'battle' : 'battles'} (${winRate}% win rate)</small>
     </div>
   `;
 
