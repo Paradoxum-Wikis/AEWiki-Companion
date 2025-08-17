@@ -70,11 +70,11 @@
     gap: 1rem;
     align-items: stretch !important;
   }
-  
+
   #recordsPagination > div {
     justify-content: center;
   }
-  
+
   #recordsPageNumbers {
     justify-content: center;
     flex-wrap: wrap;

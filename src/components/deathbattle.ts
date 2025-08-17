@@ -33,7 +33,10 @@ class DeathBattleApp {
       this.renderer.renderRankedStats(stats);
     } catch (error) {
       console.error("Failed to load battle stats:", error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to load battle statistics.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to load battle statistics.";
       this.renderer.showCasualError(errorMessage);
       this.renderer.showRankedError(errorMessage);
     }
@@ -47,7 +50,10 @@ class DeathBattleApp {
       this.renderer.renderBattleRecords(records);
     } catch (error) {
       console.error("Failed to load battle records:", error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to load battle records.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to load battle records.";
       this.renderer.showRecordsError(errorMessage);
     }
   }

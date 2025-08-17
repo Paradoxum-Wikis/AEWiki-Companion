@@ -1,15 +1,17 @@
 import { BattleStats, BattleRecord } from "../types.js";
 
 export class DeathBattleService {
-  private static readonly STATS_API = "https://altershaper.t7ru.link/battle_stats.json";
-  private static readonly RECORDS_API = "https://altershaper.t7ru.link/battle_records.json";
+  private static readonly STATS_API =
+    "https://altershaper.t7ru.link/battle_stats.json";
+  private static readonly RECORDS_API =
+    "https://altershaper.t7ru.link/battle_records.json";
   private static readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-  private static getCacheKey(type: 'stats' | 'records'): string {
+  private static getCacheKey(type: "stats" | "records"): string {
     return `deathbattle-${type}`;
   }
 
-  private static getCachedData<T>(type: 'stats' | 'records'): T | null {
+  private static getCachedData<T>(type: "stats" | "records"): T | null {
     try {
       const cached = localStorage.getItem(this.getCacheKey(type));
       if (!cached) return null;
@@ -30,11 +32,11 @@ export class DeathBattleService {
     }
   }
 
-  private static setCachedData<T>(type: 'stats' | 'records', data: T): void {
+  private static setCachedData<T>(type: "stats" | "records", data: T): void {
     try {
       const cacheData = {
         data,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
       localStorage.setItem(this.getCacheKey(type), JSON.stringify(cacheData));
       console.log(`Cached ${type} data`);
@@ -44,58 +46,61 @@ export class DeathBattleService {
   }
 
   static async fetchBattleStats(): Promise<BattleStats[]> {
-    const cached = this.getCachedData<BattleStats[]>('stats');
+    const cached = this.getCachedData<BattleStats[]>("stats");
     if (cached) return cached;
 
     try {
-      console.log('Fetching battle stats from API');
+      console.log("Fetching battle stats from API");
       const response = await fetch(this.STATS_API);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch battle stats: ${response.status}`);
       }
-      
+
       const data: BattleStats[] = await response.json();
-      this.setCachedData('stats', data);
+      this.setCachedData("stats", data);
       return data;
     } catch (error) {
-      console.error('Error fetching battle stats:', error);
+      console.error("Error fetching battle stats:", error);
       throw error;
     }
   }
 
   static async fetchBattleRecords(): Promise<BattleRecord[]> {
-    const cached = this.getCachedData<BattleRecord[]>('records');
+    const cached = this.getCachedData<BattleRecord[]>("records");
     if (cached) return cached;
 
     try {
-      console.log('Fetching battle records from API');
+      console.log("Fetching battle records from API");
       const response = await fetch(this.RECORDS_API);
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch battle records: ${response.status}`);
       }
-      
+
       const data: BattleRecord[] = await response.json();
       // Sort by battle date (newest first)
-      data.sort((a, b) => new Date(b.battleDate).getTime() - new Date(a.battleDate).getTime());
-      
-      this.setCachedData('records', data);
+      data.sort(
+        (a, b) =>
+          new Date(b.battleDate).getTime() - new Date(a.battleDate).getTime(),
+      );
+
+      this.setCachedData("records", data);
       return data;
     } catch (error) {
-      console.error('Error fetching battle records:', error);
+      console.error("Error fetching battle records:", error);
       throw error;
     }
   }
 
   static formatDate(dateString: string): string {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   }
 
@@ -108,13 +113,13 @@ export class DeathBattleService {
     const diffMinutes = Math.floor(diffMs / (1000 * 60));
 
     if (diffDays > 0) {
-      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+      return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
     } else if (diffHours > 0) {
-      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+      return `${diffHours} hour${diffHours !== 1 ? "s" : ""} ago`;
     } else if (diffMinutes > 0) {
-      return `${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''} ago`;
+      return `${diffMinutes} minute${diffMinutes !== 1 ? "s" : ""} ago`;
     } else {
-      return 'Just now';
+      return "Just now";
     }
   }
 }
