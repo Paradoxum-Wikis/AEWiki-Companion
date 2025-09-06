@@ -39,3 +39,44 @@
     min-width: 80px;
   }
 }
+
+#recordsPagination {
+  background-color: var(--card-bg);
+  border-top: 1px solid var(--border-color) !important;
+}
+
+#recordsPagination .form-select {
+  border-color: var(--border-color);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+}
+
+#recordsPagination .btn {
+  min-width: 32px;
+}
+
+#recordsPagination .btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+#records {
+  background-color: var(--card-bg);
+}
+
+@media (max-width: 768px) {
+  #recordsPagination {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch !important;
+  }
+
+  #recordsPagination > div {
+    justify-content: center;
+  }
+
+  #recordsPageNumbers {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

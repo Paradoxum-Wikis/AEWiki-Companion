@@ -1,5 +1,5 @@
 .discord-widget {
-  background: #5865F2;
+  background: #5865f2;
   border-radius: 3px;
   padding: 20px;
   color: white;
@@ -15,13 +15,14 @@
 }
 
 .discord-header > h4 {
-    color: white;
+  color: white;
 }
 
 .discord-icon {
   width: 32px;
   height: 32px;
-  background: url('https://cdn.discordapp.com/icons/1362084781134708907/db0cf1ff09caad89e93a71428c31d260.png?size=256') no-repeat center center;
+  background: url("https://cdn.discordapp.com/icons/1362084781134708907/db0cf1ff09caad89e93a71428c31d260.png?size=256")
+    no-repeat center center;
   background-size: contain;
   border-radius: 3px;
   display: flex;
@@ -48,7 +49,7 @@
 }
 
 .discord-stat-number.member {
-    color: white;
+  color: white;
 }
 
 .discord-stat-label {

@@ -32,11 +32,13 @@ export interface BattleStats {
   losses: number;
   totalBattles: number;
   winRate: number;
+  weightedScore: number;
   lastCasualBattleAt?: string;
   rankedWins: number;
   rankedLosses: number;
   rankedTotalBattles: number;
   rankedWinRate: number;
+  rankedWeightedScore: number;
   lastRankedBattleAt?: string;
 }
 
@@ -51,4 +53,5 @@ export interface BattleRecord {
   winnerHpRemaining: number;
   winnerMaxHp: number;
   isRanked: boolean;
+  guildId?: string;
 }

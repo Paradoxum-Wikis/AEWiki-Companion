@@ -3,7 +3,7 @@ interface DiscordMember {
   username: string;
   discriminator: string;
   avatar: string | null;
-  status: 'online' | 'idle' | 'dnd' | 'offline';
+  status: "online" | "idle" | "dnd" | "offline";
   avatar_url: string;
 }
 
@@ -23,8 +23,8 @@ interface DiscordWidgetData {
 }
 
 class DiscordWidget {
-  private readonly guildId: string = '1362084781134708907';
-  private readonly inviteLink: string = 'https://discord.com/invite/yfZUQ3h4cf';
+  private readonly guildId: string = "1362084781134708907";
+  private readonly inviteLink: string = "https://discord.com/invite/yfZUQ3h4cf";
   private widgetContainer: HTMLElement | null = null;
 
   constructor() {
@@ -32,8 +32,8 @@ class DiscordWidget {
   }
 
   private init(): void {
-    document.addEventListener('DOMContentLoaded', () => {
-      this.widgetContainer = document.getElementById('discordWidget');
+    document.addEventListener("DOMContentLoaded", () => {
+      this.widgetContainer = document.getElementById("discordWidget");
       if (this.widgetContainer) {
         this.loadWidget();
       }
@@ -47,18 +47,20 @@ class DiscordWidget {
       const data = await this.fetchDiscordData();
       this.renderWidget(data);
     } catch (error) {
-      console.warn('Failed to load Discord widget:', error);
+      console.warn("Failed to load Discord widget:", error);
       this.renderFallbackWidget();
     }
   }
 
   private async fetchDiscordData(): Promise<DiscordWidgetData> {
-    const response = await fetch(`https://discord.com/api/guilds/${this.guildId}/widget.json`);
-    
+    const response = await fetch(
+      `https://discord.com/api/guilds/${this.guildId}/widget.json`,
+    );
+
     if (!response.ok) {
       throw new Error(`Discord API unavailable: ${response.status}`);
     }
-    
+
     return response.json();
   }
 
@@ -71,7 +73,7 @@ class DiscordWidget {
     this.widgetContainer.innerHTML = `
       <div class="discord-header">
         <div class="discord-icon"></div>
-        <h4 class="mb-0">${this.escapeHtml(data.name || 'ALTER EGO Discord')}</h4>
+        <h4 class="mb-0">${this.escapeHtml(data.name || "ALTER EGO Discord")}</h4>
       </div>
       
       <div class="discord-stats">
@@ -123,27 +125,34 @@ class DiscordWidget {
   }
 
   private countOnlineMembers(members: DiscordMember[]): number {
-    return members ? members.filter(member => member.status === 'online').length : 0;
+    return members
+      ? members.filter((member) => member.status === "online").length
+      : 0;
   }
 
   private renderMembersList(members: DiscordMember[]): string {
     if (!members || members.length === 0) {
-      return '';
+      return "";
     }
 
     const displayMembers = members.slice(0, 20);
     const remainingCount = Math.max(0, members.length - 20);
 
-    const memberItems = displayMembers.map(member => `
+    const memberItems = displayMembers
+      .map(
+        (member) => `
       <div class="discord-member">
         <div class="discord-member-status ${member.status}"></div>
         ${this.escapeHtml(member.username)}
       </div>
-    `).join('');
+    `,
+      )
+      .join("");
 
-    const remainingText = remainingCount > 0 
-      ? `<div class="discord-member">... and ${remainingCount} more</div>` 
-      : '';
+    const remainingText =
+      remainingCount > 0
+        ? `<div class="discord-member">... and ${remainingCount} more</div>`
+        : "";
 
     return `
       <div class="discord-members">
@@ -154,7 +163,7 @@ class DiscordWidget {
   }
 
   private escapeHtml(text: string): string {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
   }

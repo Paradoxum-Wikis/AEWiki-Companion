@@ -117,8 +117,8 @@ main {
 }
 
 .btn-wiki:hover {
-  background-color: #A4141F !important;
-  border-color: #A4141F !important;
+  background-color: #a4141f !important;
+  border-color: #a4141f !important;
 }
 
 .btn-outline-secondary {
@@ -206,4 +206,9 @@ a:hover {
 
 .toru-card:hover .toru-icon {
   transform: scale(1.1);
+}
+
+.navbar {
+  background: url('/alternav.png');
+  background-size: 400px;
 }

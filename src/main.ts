@@ -4,7 +4,7 @@ import "./styles/main.css";
 import "./styles/theme.css";
 import "./styles/discord.css";
 import { ThemeManager } from "./components/themeManager.js";
-import './components/discord';
+import "./components/discord";
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM loaded");
